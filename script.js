@@ -38,24 +38,42 @@ const calculate = () => {
 
 // Keyboard Press
 document.addEventListener("keydown", (e) => {
-  if (e.key === "=" || e.key === "Enter") {
+  const key = e.key;
+  if (isOperatorKey(key)) {
+    buttonAnimation(key);
+    display(key);
+  } else if (isCalculateKey(key)) {
     calculate();
-  } else if (
-    (e.key >= "0" && e.key <= "9") ||
-    e.key === "+" ||
-    e.key === "-" ||
-    e.key === "*" ||
-    e.key === "/" ||
-    e.key === "%"
-  ) {
-    buttonAnimation(e.key);
-    display(e.key);
-  } else if (e.key === "Backspace") {
+  } else if (isClearLastCharKey(key)) {
     clearLastChar();
-  } else if (e.key === "Escape" || e.key === "C" || e.key === "c") {
+  } else if (isClearScreenKey(key)) {
     clearScreen();
   }
 });
+
+function isOperatorKey(key) {
+  return (
+    (key >= "0" && key <= "9") ||
+    key === "+" ||
+    key === "-" ||
+    key === "*" ||
+    key === "/" ||
+    key === "%" ||
+    key === "."
+  );
+}
+
+function isCalculateKey(key) {
+  return key === "=" || key === "Enter";
+}
+
+function isClearLastCharKey(key) {
+  return key === "Backspace";
+}
+
+function isClearScreenKey(key) {
+  return key === "Escape" || key === "C" || key === "c";
+}
 
 const buttonAnimation = (currentKey) => {
   const activeKey = document.getElementById(currentKey);
