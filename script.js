@@ -39,8 +39,9 @@ const calculate = () => {
 // Keyboard Press
 document.addEventListener("keydown", (e) => {
   const key = e.key;
+  const activeKey = document.getElementById(e.key);
   if (isOperatorKey(key)) {
-    buttonAnimation(key);
+    buttonAnimation(activeKey, key);
     display(key);
   } else if (isCalculateKey(key)) {
     calculate();
@@ -75,10 +76,13 @@ function isClearScreenKey(key) {
   return key === "Escape" || key === "C" || key === "c";
 }
 
-const buttonAnimation = (currentKey) => {
-  const activeKey = document.getElementById(currentKey);
+const buttonAnimation = (activeKey, key) => {
+  //   console.log(currentKey);
+  //   const activeKey = document.getElementById(currentKey);
+  //   console.log(activeKey);
 
   activeKey.classList.add("pressed");
+  //   console.log(activeKey);
 
   setTimeout(() => {
     activeKey.classList.remove("pressed");
