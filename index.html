@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator Appication</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">Calculator Application</div>
+
+      <div class="container">
+        <div class="sub-container">
+          <div class="result-box" id="result"></div>
+        </div>
+
+        <div class="sub-container">
+          <button id="%" onclick="display('%')">%</button>
+          <button id="C" onclick="clearScreen()">C</button>
+          <button id="<" onclick="clearLastChar()"><</button>
+          <button id="/" onclick="display('/')">/</button>
+        </div>
+
+        <div class="sub-container">
+          <button id="7" onclick="display('7')">7</button>
+          <button id="8" onclick="display('8')">8</button>
+          <button id="9" onclick="display('9')">9</button>
+          <button id="*" onclick="display('*')">*</button>
+        </div>
+
+        <div class="sub-container">
+          <button id="4" onclick="display('4')">4</button>
+          <button id="5" onclick="display('5')">5</button>
+          <button id="6" onclick="display('6')">6</button>
+          <button id="-" onclick="display('-')">-</button>
+        </div>
+
+        <div class="sub-container">
+          <button id="1" onclick="display('1')">1</button>
+          <button id="2" onclick="display('2')">2</button>
+          <button id="3" onclick="display('3')">3</button>
+          <button id="+" onclick="display('+')">+</button>
+        </div>
+        <div class="sub-container">
+          <button id="`" onclick="abs()">+/-</button>
+          <button id="0" onclick="display('0')">0</button>
+          <button id="." onclick="display('.')">.</button>
+          <button id="=" onclick="calculate()">=</button>
+        </div>
+      </div>
+    </div>
+
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
