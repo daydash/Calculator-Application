@@ -115,7 +115,7 @@ const isClearScreenKey = (key) => {
  * The `headerRename` function swaps between the headings according to the screen height of the system
  */
 const headerRename = () => {
-  if (window.innerHeight <= 896) {
+  if (window.innerHeight <= 896 && window.innerWidth <= 768) {
     document.querySelectorAll(".header")[0].innerHTML = "Calculator";
   } else {
     document.querySelectorAll(".header")[0].innerHTML =
@@ -137,8 +137,9 @@ const resultBoxChange = () => {
   const length = result.value.length;
 
   switch (true) {
-    case length > 69:
-      result.style.height = "96px";
+    case length > 124:
+      result.style.height = "72px";
+      document.getElementById("result").style.overflow = "auto";
       break;
     case length > 40:
       result.style.fontSize = "15px";
