@@ -1,90 +1,129 @@
+// Functions to clear the output box
+/**
+ * The function "clearScreen" removes all the characters from the text content of the result box
+ * with the id "result".
+ */
 const clearScreen = () => {
-  document.getElementById("result").innerText = "";
+	document.getElementById("result").value = "";
 };
 
+/**
+ * The function "clearLastChar" removes the last character from the text content of the result box
+ * with the id "result".
+ */
 const clearLastChar = () => {
-  document.getElementById("result").innerText = document
-    .getElementById("result")
-    .innerText.slice(0, -1);
+	document.getElementById("result").value = document
+		.getElementById("result")
+		.value.slice(0, -1);
 };
 
+// Functions to display the entered value
+
+/**
+ * The function "display" appends a given value to the inner text of an HTML element with the id
+ * "result".
+ * @param value - The value parameter is the value that you want to display. It can be a
+ * character (operator) or a number.
+ */
 const display = (value) => {
-  document.getElementById("result").innerText += value;
+	document.getElementById("result").value += value;
 };
 
-const abs = () => {
-  document.getElementById("result").innerText[0] === "-"
-    ? document.getElementById("result").innerText.slice(1) // issue here
-    : (document.getElementById("result").innerText =
-        "-" + document.getElementById("result").innerText);
+/**
+ * The function `signed` toggles the sign of a number displayed in the result box with the id
+ * "result".
+ */
+const signed = () => {
+	let p = document.getElementById("result").value;
 
-  //   console.log(document.getElementById("result").innerText);
+	p[0] === "-"
+		? (document.getElementById("result").value = p.slice(1)) // issue here
+		: (document.getElementById("result").value = "-" + p);
 };
 
+/**
+ * The function calculates the result of an expression displayed in the result box
+ * and handles error cases.
+ */
 const calculate = () => {
-  let p = document.getElementById("result").innerText;
-  if (p[0] === "*" || p[0] === "/" || p[0] === "%") {
-    document.getElementById("result").innerText === "ERROR";
-    setTimeout(clearScreen, 1000);
-  }
-  let q = eval(p);
-  document.getElementById("result").innerText = q;
+	let p = document.getElementById("result").value;
+	if (p[0] === "*" || p[0] === "/" || p[0] === "%") {
+		document.getElementById("result").value === "ERROR";
+		setTimeout(clearScreen, 1000);
+	}
+	let q = eval(p);
+	document.getElementById("result").value = q;
 
-  if (q == "Infinity") {
-    console.log(q);
-    setTimeout(clearScreen, 1000);
-  }
+	if (q == "Infinity") {
+		console.log(q);
+		setTimeout(clearScreen, 1000);
+	}
 };
 
-// Keyboard Press
+// Detecting Keyboard Presses
+/* The code snippet `document.addEventListener("keydown", (e) => { ... })` is adding an event listener
+to the `keydown` event of the `document` object. This event listener is triggered whenever a key is
+pressed on the keyboard. */
 document.addEventListener("keydown", (e) => {
-  const key = e.key;
-  const activeKey = document.getElementById(e.key);
-  if (isOperatorKey(key)) {
-    buttonAnimation(activeKey, key);
-    display(key);
-  } else if (isCalculateKey(key)) {
-    calculate();
-  } else if (isClearLastCharKey(key)) {
-    clearLastChar();
-  } else if (isClearScreenKey(key)) {
-    clearScreen();
-  }
+	const key = e.key;
+	const activeKey = document.getElementById(e.key);
+	if (isOperatorKey(key)) {
+		buttonAnimation(activeKey, key);
+		display(key);
+	} else if (isCalculateKey(key)) {
+		calculate();
+	} else if (isClearLastCharKey(key)) {
+		clearLastChar();
+	} else if (isClearScreenKey(key)) {
+		clearScreen();
+	}
 });
 
-function isOperatorKey(key) {
-  return (
-    (key >= "0" && key <= "9") ||
-    key === "+" ||
-    key === "-" ||
-    key === "*" ||
-    key === "/" ||
-    key === "%" ||
-    key === "."
-  );
-}
+/**
+ * The below code defines four functions in JavaScript to check if a given key is an operator key, a
+ * calculate key, a clear last character key, or a clear screen key.
+ * @param key - The `key` parameter represents the key that was pressed on the keyboard.
+ * @returns The code is returning a boolean value indicating whether the given key is an operator key,
+ * a calculate key, a clear last character key, or a clear screen key.
+ */
+const isOperatorKey = (key) => {
+	return (
+		(key >= "0" && key <= "9") ||
+		key === "+" ||
+		key === "-" ||
+		key === "*" ||
+		key === "/" ||
+		key === "%" ||
+		key === "."
+	);
+};
 
-function isCalculateKey(key) {
-  return key === "=" || key === "Enter";
-}
+const isCalculateKey = (key) => {
+	return key === "=" || key === "Enter";
+};
 
-function isClearLastCharKey(key) {
-  return key === "Backspace";
-}
+const isClearLastCharKey = (key) => {
+	return key === "Backspace";
+};
 
-function isClearScreenKey(key) {
-  return key === "Escape" || key === "C" || key === "c";
-}
+const isClearScreenKey = (key) => {
+	return key === "Escape" || key === "C" || key === "c";
+};
 
+/**
+ * The function `buttonAnimation` adds and removes a CSS class to create a button animation effect.
+ * @param activeKey - The activeKey parameter represents the HTML element that is currently active,
+ * pressed or selected.
+ * @param key - The `key` parameter is the key that was pressed or triggered the button animation.
+ */
 const buttonAnimation = (activeKey, key) => {
-  //   console.log(currentKey);
-  //   const activeKey = document.getElementById(currentKey);
-  //   console.log(activeKey);
+	//   console.log(currentKey);
+	//   const activeKey = document.getElementById(currentKey);
+	//   console.log(activeKey);
 
-  activeKey.classList.add("pressed");
-  //   console.log(activeKey);
+	activeKey.classList.add("pressed");
 
-  setTimeout(() => {
-    activeKey.classList.remove("pressed");
-  }, 100);
+	setTimeout(() => {
+		activeKey.classList.remove("pressed");
+	}, 100);
 };
