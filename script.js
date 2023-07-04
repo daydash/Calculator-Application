@@ -4,7 +4,7 @@
  * with the id "result".
  */
 const clearScreen = () => {
-	document.getElementById("result").value = "";
+  document.getElementById("result").value = "";
 };
 
 /**
@@ -12,9 +12,9 @@ const clearScreen = () => {
  * with the id "result".
  */
 const clearLastChar = () => {
-	document.getElementById("result").value = document
-		.getElementById("result")
-		.value.slice(0, -1);
+  document.getElementById("result").value = document
+    .getElementById("result")
+    .value.slice(0, -1);
 };
 
 // Functions to display the entered value
@@ -26,7 +26,7 @@ const clearLastChar = () => {
  * character (operator) or a number.
  */
 const display = (value) => {
-	document.getElementById("result").value += value;
+  document.getElementById("result").value += value;
 };
 
 /**
@@ -34,11 +34,11 @@ const display = (value) => {
  * "result".
  */
 const signed = () => {
-	let p = document.getElementById("result").value;
+  let p = document.getElementById("result").value;
 
-	p[0] === "-"
-		? (document.getElementById("result").value = p.slice(1)) // issue here
-		: (document.getElementById("result").value = "-" + p);
+  p[0] === "-"
+    ? (document.getElementById("result").value = p.slice(1)) // issue here
+    : (document.getElementById("result").value = "-" + p);
 };
 
 /**
@@ -46,18 +46,18 @@ const signed = () => {
  * and handles error cases.
  */
 const calculate = () => {
-	let p = document.getElementById("result").value;
-	if (p[0] === "*" || p[0] === "/" || p[0] === "%") {
-		document.getElementById("result").value === "ERROR";
-		setTimeout(clearScreen, 1000);
-	}
-	let q = eval(p);
-	document.getElementById("result").value = q;
+  let p = document.getElementById("result").value;
+  if (p[0] === "*" || p[0] === "/" || p[0] === "%") {
+    document.getElementById("result").value === "ERROR";
+    setTimeout(clearScreen, 1000);
+  }
+  let q = eval(p);
+  document.getElementById("result").value = q;
 
-	if (q == "Infinity") {
-		console.log(q);
-		setTimeout(clearScreen, 1000);
-	}
+  if (q == "Infinity") {
+    console.log(q);
+    setTimeout(clearScreen, 1000);
+  }
 };
 
 // Detecting Keyboard Presses
@@ -65,18 +65,19 @@ const calculate = () => {
 to the `keydown` event of the `document` object. This event listener is triggered whenever a key is
 pressed on the keyboard. */
 document.addEventListener("keydown", (e) => {
-	const key = e.key;
-	const activeKey = document.getElementById(e.key);
-	if (isOperatorKey(key)) {
-		buttonAnimation(activeKey, key);
-		display(key);
-	} else if (isCalculateKey(key)) {
-		calculate();
-	} else if (isClearLastCharKey(key)) {
-		clearLastChar();
-	} else if (isClearScreenKey(key)) {
-		clearScreen();
-	}
+  const key = e.key;
+  if (isOperatorKey(key)) {
+    display(key);
+  } else if (isCalculateKey(key)) {
+    calculate();
+  } else if (isClearLastCharKey(key)) {
+    clearLastChar();
+  } else if (isClearScreenKey(key)) {
+    clearScreen();
+  } else if (key === "`") {
+    signed();
+  }
+  resultBoxChange();
 });
 
 /**
@@ -87,43 +88,69 @@ document.addEventListener("keydown", (e) => {
  * a calculate key, a clear last character key, or a clear screen key.
  */
 const isOperatorKey = (key) => {
-	return (
-		(key >= "0" && key <= "9") ||
-		key === "+" ||
-		key === "-" ||
-		key === "*" ||
-		key === "/" ||
-		key === "%" ||
-		key === "."
-	);
+  return (
+    (key >= "0" && key <= "9") ||
+    key === "+" ||
+    key === "-" ||
+    key === "*" ||
+    key === "/" ||
+    key === "%" ||
+    key === "."
+  );
 };
 
 const isCalculateKey = (key) => {
-	return key === "=" || key === "Enter";
+  return key === "=" || key === "Enter";
 };
 
 const isClearLastCharKey = (key) => {
-	return key === "Backspace";
+  return key === "Backspace";
 };
 
 const isClearScreenKey = (key) => {
-	return key === "Escape" || key === "C" || key === "c";
+  return key === "Escape" || key === "C" || key === "c";
 };
 
 /**
- * The function `buttonAnimation` adds and removes a CSS class to create a button animation effect.
- * @param activeKey - The activeKey parameter represents the HTML element that is currently active,
- * pressed or selected.
- * @param key - The `key` parameter is the key that was pressed or triggered the button animation.
+ * The `headerRename` function swaps between the headings according to the screen height of the system
  */
-const buttonAnimation = (activeKey, key) => {
-	//   console.log(currentKey);
-	//   const activeKey = document.getElementById(currentKey);
-	//   console.log(activeKey);
+const headerRename = () => {
+  if (window.innerHeight <= 896) {
+    document.querySelectorAll(".header")[0].innerHTML = "Calculator";
+  } else {
+    document.querySelectorAll(".header")[0].innerHTML =
+      "Calculator Application";
+  }
+};
 
-	activeKey.classList.add("pressed");
+/**
+ * `window.onresize` triggers continously to check the change in size of the window screen
+ * and invokes the `headerRename` function to manage responsiveness
+ */
+window.onresize = headerRename;
 
-	setTimeout(() => {
-		activeKey.classList.remove("pressed");
-	}, 100);
+/**
+ * this function is to handle the font size changes in the result box according to the length of the input
+ */
+const resultBoxChange = () => {
+  const result = document.getElementById("result");
+  const length = result.value.length;
+
+  switch (true) {
+    case length > 69:
+      result.style.height = "96px";
+      break;
+    case length > 40:
+      result.style.fontSize = "15px";
+      result.style.height = "48px";
+      break;
+    case length > 29:
+      result.style.fontSize = "25px";
+      result.style.height = "48px";
+      break;
+    default:
+      result.style.fontSize = "36px";
+      result.style.height = "48px";
+      break;
+  }
 };
