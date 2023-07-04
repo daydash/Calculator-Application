@@ -41,12 +41,14 @@ body {
 .result-box {
   width: 97%;
   height: 48px;
-  padding: 20px;
+  padding: 2px 3px 2px 10px;
   margin: 10px 0;
   border-radius: 12px;
   font-size: 36px;
   border: 3px solid #142f44;
   color: #ffffff;
+  overflow: hidden;
+  background-color: #a2bbcf;
 }
 
 .btn {
@@ -115,6 +117,19 @@ body {
     min-width: 100px;
   }
 }
+@media (min-width: 993px) and (max-width: 1200px) {
+  .container {
+    padding: 0 auto;
+  }
+  .result-box {
+    max-width: 74%;
+  }
+  .btn {
+    max-width: 64px;
+    max-height: 64px;
+  }
+}
+
 @media (max-height: 889px) {
   .header {
     margin: 3px auto 5px;
